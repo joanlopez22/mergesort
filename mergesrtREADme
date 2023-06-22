@@ -1,0 +1,9 @@
+El merge sort, también conocido como ordenamiento por mezcla, es un algoritmo de clasificación eficiente y versátil. Su objetivo principal es ordenar una lista de elementos de forma ascendente o descendente. El merge sort se basa en un enfoque dividir y conquistar, lo que significa que divide el problema principal en subproblemas más pequeños, los resuelve por separado y luego combina las soluciones para obtener el resultado final.
+
+El proceso del merge sort se realiza en varias etapas. Primero, la lista de elementos se divide en mitades aproximadamente iguales hasta que queden sublistas de un solo elemento. Estas sublistas se consideran ordenadas por definición.
+
+Luego, comienza la fase de fusión. En esta etapa, las sublistas se combinan de manera iterativa, comparando y fusionando los elementos en un solo orden. Se toman las sublistas ordenadas y se comparan los elementos en la posición correspondiente. El elemento más pequeño (o más grande, dependiendo del ordenamiento deseado) se coloca en la lista de salida, y el proceso continúa hasta que todas las sublistas se fusionen en una única lista ordenada.
+
+El merge sort se destaca por su eficiencia en términos de tiempo de ejecución. Su complejidad promedio y peor de los casos es de O(n log n), lo que lo convierte en una excelente opción para ordenar grandes conjuntos de datos. Además, el merge sort es estable, lo que significa que conserva el orden relativo de los elementos con valores iguales.
+
+En resumen, el merge sort es un algoritmo de clasificación poderoso y eficiente que utiliza la técnica de dividir y conquistar para ordenar una lista de elementos. Su enfoque sistemático y su complejidad logarítmica hacen que sea una elección popular en aplicaciones donde se necesita un ordenamiento rápido y confiable.
