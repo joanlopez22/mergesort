@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mergesort</title>
+  <style>
+    body {
+      background-color: #111;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .array-container {
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 50px;
+    }
+
+    .box {
+      width: 40px;
+      height: 40px;
+      background-color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-right: 5px;
+      color: white;
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+
+    .sorted {
+      background-color: #4CAF50;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div id="home">
+    <h1>Bienvenido al Mergesort</h1>
+    <p>El Mergesort es un algoritmo de ordenamiento que utiliza la técnica de "divide y vencerás" para ordenar una lista de elementos.</p>
+    <p>Consiste en dividir la lista en mitades sucesivamente, ordenar cada mitad por separado y luego combinar las mitades ordenadas para obtener la lista final ordenada.</p>
+    <p>Haz clic en el botón "Ordenar" para ver el algoritmo en acción.</p>
+    <button onclick="startSorting()">Ordenar</button>
+    <button onclick="resetSorting()">Reiniciar</button>
+  </div>
+
+  <div class="array-container" id="array-container"></div>
+
+  <script>
+    var arrayContainer = document.getElementById('array-container');
+    var boxes = [];
+    var arr = [];
+    var isSorting = false;
+
+    // Genera un arreglo aleatorio de tamaño 'size' y lo muestra en la interfaz
+    function generateRandomArray(size) {
+      arrayContainer.innerHTML = '';
+      boxes = [];
+      arr = [];
+
+      for (var i = 0; i < size; i++) {
+        var value = Math.floor(Math.random() * 100) + 1;
+        var box = document.createElement('div');
+        box.className = 'box';
+        box.style.height = value + 'px';
+        box.innerText = value;
+        arrayContainer.appendChild(box);
+        boxes.push(box);
+        arr.push(value);
+      }
+    }
+
+    // Implementación del algoritmo Mergesort
+    async function mergeSort(start, end) {
+      if (start >= end) {
+        return;
+      }
+
+      var mid = Math.floor((start + end) / 2);
+      await mergeSort(start, mid);
+      await mergeSort(mid + 1, end);
+      await merge(start, mid, end);
+    }
+
+    async function merge(start, mid, end) {
+      var mergedArr = [];
+      var i = start;
+      var j = mid + 1;
+
+      while (i <= mid && j <= end) {
+        if (arr[i] < arr[j]) {
+          mergedArr.push(arr[i]);
+          i++;
+        } else {
+          mergedArr.push(arr[j]);
+          j++;
+        }
+      }
+
+      while (i <= mid) {
+        mergedArr.push(arr[i]);
+        i++;
+      }
+
+      while (j <= end) {
+        mergedArr.push(arr[j]);
+        j++;
+      }
+
+      for (var k = start; k <= end; k++) {
+        arr[k] = mergedArr[k - start];
+        await animateBox(k);
+      }
+    }
+
+    async function animateBox(index) {
+      var box = boxes[index];
+      var height = arr[index];
+
+      return new Promise(resolve => {
+        setTimeout(() => {
+          box.style.height = height + 'px';
+          box.innerText = height;
+          box.classList.add('sorted');
+          resolve();
+        }, index * 200);
+      });
+    }
+
+    async function startSorting() {
+      if (isSorting) {
+        return;
+      }
+
+      isSorting = true;
+      document.getElementById('home').style.display = 'none';
+      generateRandomArray(10);
+      await mergeSort(0, arr.length - 1);
+      isSorting = false;
+    }
+
+    function resetSorting() {
+      if (isSorting) {
+        return;
+      }
+
+      document.getElementById('home').style.display = 'block';
+      arrayContainer.innerHTML = '';
+      boxes = [];
+      arr = [];
+    }
+  </script>
+</body>
+</html>
